@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# 检查系统是否已经安装了git
+if ! [ -x "$(command -v git)" ]; then
+  echo 'git is not installed. Installing git...'
+  # 根据不同的包管理器安装git
+  if [ -x "$(command -v apt)" ]; then
+    sudo apt update
+    sudo apt install -y git
+  elif [ -x "$(command -v yum)" ]; then
+    sudo yum install -y git
+  elif [ -x "$(command -v dnf)" ]; then
+    sudo dnf install -y git
+  else
+    echo 'Error: Unsupported package manager.' >&2
+    exit 1
+  fi
+else
+  echo 'git is already installed.'
+fi
+
+# 打印已安装的版本
+git --version
